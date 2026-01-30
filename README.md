@@ -1,14 +1,38 @@
-# How to setup Allegro with vscode
+# Базовый проект C++ и Allegro5
 
-Ensure you have C++ installed. Follow this [guide](https://code.visualstudio.com/docs/cpp/config-mingw#_prerequisites) if not.
+Это скелет проекта для работы в `VScode`. Если вы хотите работать в `Codeblocks` или вы сами хотите установить `Allegro5` не используя готовый код - смотрите файл `INSTALL.md`.
 
-This is a project with allegro installed and `build.bat` file written for easier compilation.
-Important lines of that script are 2nd and 5th. 2nd has all files that project requires, while 5th has all libraries that Allegro provides connected.
+## Как работает проект
 
-### To install allegro manually:
+Он идет сразу с установленой библиотекой `Allegro5` 
+и двумя вспомогательными файлами: `AllegroUtil.cpp` и `AllegroUtil.hpp`.
+Далее весь код можно писать самостоятельно.
 
-1) Download Allegro prebuild from its [github](https://github.com/liballeg/allegro5/releases).
+### Компиляция на Windows
 
-2) Put Allegro files into the folder with a project.
+Изменяем файл `build.bat` там где указаны комментарии.
+```bat
+g++ ^
+@REM Ниже указываем все файлы нужные в проекте
+example_2.cpp AllegroUtil.cpp ^ 
+@REM Ниже указываем куда компилируется программа и какое у неё название
+-o bin/program ^ 
+-Iallegro/include -Lallegro/lib ^
+-lallegro -lallegro_main -lallegro_primitives
+```
 
-3) Build your project while connecting all necessary libs. Be sure that built executable is located in the same dir with all `allegro/bin/*.dll` files.
+Запускаем в `cmd` и готово.
+
+### Компиляция на Linux
+
+Изменяем файл `build.sh` там где указаны комментарии.
+```sh
+g++ \
+# Ниже указываем все файлы нужные в проекте
+main.cpp AllegroUtil.cpp \ 
+# Ниже указываем куда компилируется программа и какое у неё название
+-o linux/app \
+$(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+```
+
+Запускаем в `bash` и готово.
