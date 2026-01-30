@@ -12,3 +12,8 @@ Important lines of that script are 2nd and 5th. 2nd has all files that project r
 2) Put Allegro files into the folder with a project.
 
 3) Build your project while connecting all necessary libs. Be sure that built executable is located in the same dir with all `allegro/bin/*.dll` files.
+
+### Installing on linux:
+
+It is much easier. Install allegro5 by this [guide](https://github.com/liballeg/allegro_wiki/wiki/Quickstart).
+Then just run `build.sh` and you are good to go.

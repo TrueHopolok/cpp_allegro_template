@@ -1,6 +1,6 @@
 #include <iostream>
 #include "AllegroUtil.hpp"
-#include <windows.h>
+// #include <windows.h> // used on Windows operating system
 #include <cstdlib>
 #include <cstdio>
 
@@ -33,7 +33,7 @@ void draw2()
     {
         al_draw_line(100, 100, 200 + i * 10, 200, al_map_rgb(255, 0, 0), 2);
         al_flip_display();
-        Sleep(1000); // one second sleep, from <windows.h>
+        // Sleep(1000); // one second sleep, from <windows.h>
     }
     ExitAllegro();
 }
