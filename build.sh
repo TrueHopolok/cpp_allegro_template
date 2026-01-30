@@ -1,2 +1,1 @@
-g++ main.cpp AllegroUtil.cpp -o linux/app \
-$(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+g++ example_2.cpp AllegroUtil.cpp -o linux/program $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
