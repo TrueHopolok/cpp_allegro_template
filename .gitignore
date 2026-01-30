@@ -1,3 +1,5 @@
 .vscode
-bin/app.exe
-linux/app
+bin/*
+!bin/*.dll
+linux/*
+!linux/.gitkeep
