@@ -29,9 +29,9 @@ example_2.cpp AllegroUtil.cpp ^
 ```sh
 g++ \
 # Ниже указываем все файлы нужные в проекте
-main.cpp AllegroUtil.cpp \ 
+example_2.cpp AllegroUtil.cpp \ 
 # Ниже указываем куда компилируется программа и какое у неё название
--o linux/app \
+-o linux/program \
 $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
 ```
 
