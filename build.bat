@@ -1,1 +1,1 @@
-g++ example_2.cpp AllegroUtil.cpp -o bin/program -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
+g++ example_util_2.cpp AllegroUtil.cpp -o bin/program -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
