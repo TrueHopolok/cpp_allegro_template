@@ -1,9 +1,9 @@
 # Туториал по установке С++ и Allegro5
 
 Тут полный туториал как установить плюсы как на `Windows` так и на `Linux` + установка `Allegro5` в `Codeblocks` и в `VScode`.
-Также тут есть мини гайд как работать с `Codeblocks` совсем в краце. 
+Также тут есть мини гайд как работать с `Codeblocks` и `Allegro5` (смотреть `Windows + Codeblocks` и `Базовый проект по Allegro5`).
 
-Актуален на момент `31.01.2026` для версий `codeblocks 25.03` и `allegro 5.2.11.2`.
+Туториал актуален на момент `01.03.2026` для версий `codeblocks 25.03` и `allegro 5.2.11.2`.
 
 ## Windows + Codeblocks
 
@@ -11,7 +11,9 @@
 
 ### Установка среды разработки
 
-1) Скачать `Codeblocks` по ссылке: https://sourceforge.net/projects/codeblocks/files/Binaries/25.03/Windows/codeblocks-25.03-setup.exe/download.
+1) Скачать `Codeblocks` по одной из ссылок: 
+    - https://sourceforge.net/projects/codeblocks/files/Binaries/25.03/Windows/codeblocks-25.03-setup.exe/download
+    - https://www.codeblocks.org/downloads/binaries/
 
 2) Установить `Codeblocks` и запустить. Он уже должен работать для `C` и `C++` файлов. Для проверки можно написать Hello world! программу.
 
@@ -25,7 +27,9 @@
     }
     ```
 
-3) Скачать `Allegro5` по ссылке: https://github.com/liballeg/allegro5/releases/download/5.2.11.2/allegro-x86_64-w64-mingw32-gcc-15.2.0-posix-seh-dynamic-5.2.11.2.zip.
+3) Скачать `Allegro5` по одной из ссылок:
+    - https://github.com/liballeg/allegro5/releases/download/5.2.11.2/allegro-x86_64-w64-mingw32-gcc-15.2.0-posix-seh-dynamic-5.2.11.2.zip
+    - https://github.com/liballeg/allegro5/releases
 
 4) Разархивировать в любую директорию (желательно отдельно от рабочей директории).
 
@@ -41,8 +45,6 @@
     3) Из `Linker Settings` надо перейти в `Search directories`.
 
     4) Добавить директорию: `allegro/include`.
-
-Готово далее смотреть: базовый проект по `Allegro5`.
 
 ### Краткое руководство по работе с Codeblocks
 
@@ -61,23 +63,36 @@
 - Открытие: `File->Open` и выбрать `.cbp` файл.
 - Добавить/удалить файлы: ПКМ по иконке проекта в `Codeblocks` слева в файловой системе. Далее будет выбор какие файлы добавить или удалить. Все файлы должны быть в директории проекта или под-директории проекта.
 
+#### Allegro5
+
+Для работы с `Allegro5` одиночные файлы можно запускать сразу, без создания проекта.
+
+Для работы сразу с несколькими файлами надо создать проект и добавить рабочие файлы в проект.
+
+Важно что исполняемый файл не будет выполнятся если не находится в той же директории, что и `.dll` файлы из `allegro/bin`. 
+
+Проекты `Codeblocks` компилирует по `bin/Debug` пути относительно `.cbp` файла. Можно перенести все `.dll` файлы в эту директорию, чтобы не думать об этом при каждой компиляции.
+
 ## Windows + VScode
 
 1) Скачать и установить компилятор `С++`. 
-    - Можно установить по этому гайду: https://code.visualstudio.com/docs/languages/cpp.
+    - Можно установить по этому гайду: https://code.visualstudio.com/docs/languages/cpp
     - Можно просто скачать `Codeblocks` и вместе с этим скачается и компилятор, который далее надо просто добавить в `%PATH%` в Windows-e.
     
 2) Проверить работает ли комиплятор можно выполнив команду `g++ --version`. Далее запуск программ можно воспроизводить с помощью `g++ main.cpp -o progam`, где 
     - `main.cpp` - исполнимый файл;
     - `program` - название сбилденого файла.
 
-3) Скачать `Allegro5` по ссылке: https://github.com/liballeg/allegro5/releases/download/5.2.11.2/allegro-x86_64-w64-mingw32-gcc-15.2.0-posix-seh-dynamic-5.2.11.2.zip.
+3) Скачать `Allegro5` по одной из ссылок:
+    - https://github.com/liballeg/allegro5/releases/download/5.2.11.2/allegro-x86_64-w64-mingw32-gcc-15.2.0-posix-seh-dynamic-5.2.11.2.zip
+    - https://github.com/liballeg/allegro5/releases
 
-4) Разархивировать в рабочую директорию проекта для более лёгкого линка. Далее компиляция любого проекта происходит так (для переноса строки используйте `^` в `cmd` или `\` в `bash`):
+4) Разархивировать в рабочую директорию проекта для более лёгкого линка. Далее компиляция любого проекта выглядет так (команда для билда в консоль):
     ```
-    g++ main.cpp -o program 
-    -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
+    g++ main.cpp -o program -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
     ```
+
+    Важно исполняемый файл закинуть в ту же директорию что и `.dll` файлы. Как пример, можно создать директорию `bin/` в которую закинуть все `.dll` файлы и компилировать в ту же директорию.
 
 ## Linux
 
@@ -90,17 +105,16 @@
 
 2) Скачать `Allegro5` можно выполнив 1-2 команды из гайда по ссылке: https://github.com/liballeg/allegro_wiki/wiki/Quickstart#ubuntu-1804-or-derivatives-thereof.
 
-3) Запуск проекта с `Allegro5` можно сделать с помощью этой команды:
+3) Компиляция проекта с `Allegro5` можно сделать с помощью этой команды:
     ```sh
-    g++ main.cpp -o linux/app \
-    $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+    g++ main.cpp -o linux/app $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
     ```
 
 ## Базовый проект по Allegro5
 
-После установки, скопируйте код ниже и скомпилируйте.
+После установки рабочей среды, скопируйте код ниже и скомпилируйте.
 
-Файл `example_1.cpp`:
+Файл `src/example_solo_1.cpp`:
 ```c++
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
@@ -228,7 +242,7 @@ int main(int argc, char **argv)
 
 После компиляции программа будет вылетать с ошибкой. Её надо поместить в одну директорию с `.dll` файлами из `allegro/bin`. Можно либо его руками переносить, либо перенести все `.dll` файлы в директорию к исполняемому файлу.
 
-Для примера `Codeblocks` компилирует проект по `bin/Debug` пути относительно `.cbp` файла. Можно перенести все `.dll` файлы в эту директорию, чтобы после не думать об этом.
+Для примера `Codeblocks` компилирует проект по `bin/Debug` пути относительно `.cbp` файла. Можно перенести все `.dll` файлы в эту директорию, чтобы не думать об этом при каждой компиляции.
 
 Для тех кто пользуется другим редактором, можно в аргументе компиляции указать путь, куда сохранятеся исполняемый файл. Например будет `bin` директория. Тогда можно перенести все `.dll` файлы туда и запустить компиляцию с флагом `-o bin/program`.
 

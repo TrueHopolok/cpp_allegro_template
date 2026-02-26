@@ -1,1 +1,1 @@
-g++ example_engine_3.cpp engine.cpp -o linux/program -std=c++17 $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+g++ src/example_engine_3.cpp src/engine.cpp -o build/linux/program -std=c++17 $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)

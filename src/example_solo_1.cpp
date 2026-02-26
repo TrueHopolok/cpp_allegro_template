@@ -1,3 +1,7 @@
+// Данный пример работает без вспомогательных файлов,
+// поэтому в скрипте надо указать только этот файл
+// и не надо указывать AllegroUtil или engine
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <cstdio>

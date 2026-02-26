@@ -1,3 +1,7 @@
+// Данный пример работает на AllegroUtil,
+// поэтому надо изменить build скрипт
+// чтобы он подключал AllegroUtil.cpp
+
 #include "AllegroUtil.hpp"
 #include <iostream>
 // #include <windows.h> // used on Windows operating system

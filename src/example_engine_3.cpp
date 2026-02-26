@@ -1,3 +1,7 @@
+// Данный пример работает на engine,
+// поэтому надо изменить build скрипт
+// чтобы он подключал engine.cpp
+
 #include "engine.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <cstddef>
