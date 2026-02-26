@@ -10,32 +10,45 @@
 #include <allegro5/system.h>
 #include <allegro5/timer.h>
 #include <cstddef>
-#include <functional>
 
 #define forever while (true)
 
 class Engine {
   private:
-    Engine() {};
-    Engine(const Engine &) {};
-    Engine(Engine &&) noexcept {};
-    static bool stopped;
+    bool stopped = true;
+    ALLEGRO_TIMER *timer = nullptr;
+    ALLEGRO_DISPLAY *display = nullptr;
+    ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
+
+  protected:
+    const double FPS = 60;
+    const std::size_t WIDTH = 640;
+    const std::size_t HEIGHT = 360;
+
+    // Color that fills the screen before `render_process`
+    // SEE: `full_redraw` for more info
+    ALLEGRO_COLOR bg_color = {0, 0, 0, 0};
+
+    // TRUE: before each `render_process` screen is filled with `bg_color`
+    // FALSE: screen remains unchanged before `render_process`
+    // NOTE: can be used, to skip `render_process` if there is nothing to render
+    bool full_redraw = true;
+
+    // TRUE: outputs debug info into console
+    bool verbose = true;
+
+    // Called each frame to update internal logic
+    virtual void physics_process() = 0;
+
+    // Called each frame to redraw all things on screen
+    virtual void render_process() = 0;
 
   public:
-    static const std::size_t FPS = 60;
-    static const std::size_t WIDTH = 640;
-    static const std::size_t HEIGHT = 360;
-    static const bool VERBOSE = true;
-    static constexpr ALLEGRO_COLOR BG_COLOR = {0, 0, 0, 0};
+    // Initialize and start the game loop
+    void start();
 
-    static bool paused;
-    static ALLEGRO_TIMER *timer;
-    static ALLEGRO_DISPLAY *display;
-    static ALLEGRO_EVENT_QUEUE *event_queue;
-
-    static void start(const std::function<void()> &fps_update,
-                      const std::function<void()> &draw_update);
-    static void stop();
+    // Stops game loop
+    void stop();
 };
 
 #endif
