@@ -5,6 +5,7 @@
 #include "engine.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <cstddef>
+#include <exception>
 #include <iostream>
 #include <vector>
 
@@ -82,8 +83,8 @@ int main() {
     screen.add_object(new Circle({600, 320}, 30));
     try {
         screen.start();
-    } catch (char const *error) {
-        cout << error << endl;
+    } catch (exception err) {
+        cout << err.what() << endl;
     }
     return 0;
 }

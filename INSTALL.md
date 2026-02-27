@@ -40,7 +40,10 @@
     2) Добавьте файлы: 
         - `allegro/lib/liballegro.dll.a`;
         - `allegro/lib/liballegro_main.dll.a`;
-        - `allegro/lib/liballegro_primitives.dll.a`.
+        - `allegro/lib/liballegro_primitives.dll.a`;
+        - `allegro/lib/liballegro_image.dll.a`;
+        - `allegro/lib/liballegro_font.dll.a`;
+        - `allegro/lib/liballegro_ttf.dll.a`.
     
     3) Из `Linker Settings` надо перейти в `Search directories`.
 
@@ -89,8 +92,19 @@
 
 4) Разархивировать в рабочую директорию проекта для более лёгкого линка. Далее компиляция любого проекта выглядет так (команда для билда в консоль):
     ```
-    g++ main.cpp -o program -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
+    g++ src/example_engine_3.cpp src/engine.cpp ^
+    -o build/windows/program ^
+    -std=c++17 ^
+    -Iallegro/include ^
+    -Lallegro/lib ^
+    -lallegro ^
+    -lallegro_main ^
+    -lallegro_primitives ^
+    -lallegro_image ^
+    -lallegro_font ^
+    -lallegro_ttf
     ```
+    Если не работает, попробуйте убрать `^` так, чтобы вся команда была в одну строку.
 
     Важно исполняемый файл закинуть в ту же директорию что и `.dll` файлы. Как пример, можно создать директорию `bin/` в которую закинуть все `.dll` файлы и компилировать в ту же директорию.
 
@@ -107,8 +121,12 @@
 
 3) Компиляция проекта с `Allegro5` можно сделать с помощью этой команды:
     ```sh
-    g++ main.cpp -o linux/app $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+    g++ src/example_engine_3.cpp src/engine.cpp \
+    -o build/linux/program \
+    -std=c++17 \
+    $(pkg-config --cflags --libs allegro-5 allegro_primitives-5 allegro_image-5 allegro_font-5 allegro_ttf-5)
     ```
+    Если не работает, попробуйте убрать `\` так, чтобы вся команда была в одну строку.
 
 ## Базовый проект по Allegro5
 

@@ -1,9 +1,11 @@
 #ifndef ENGINE
 #define ENGINE
 
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
 #include <allegro5/color.h>
-#include <allegro5/display.h>
 #include <allegro5/events.h>
 #include <allegro5/keyboard.h>
 #include <allegro5/mouse.h>
@@ -15,16 +17,13 @@
 
 class Engine {
   private:
+    inline static bool initialized = false;
     bool stopped = true;
     ALLEGRO_TIMER *timer = nullptr;
     ALLEGRO_DISPLAY *display = nullptr;
     ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
 
   protected:
-    const double FPS = 60;
-    const std::size_t WIDTH = 640;
-    const std::size_t HEIGHT = 360;
-
     // Color that fills the screen before `render_process`
     // SEE: `full_redraw` for more info
     ALLEGRO_COLOR bg_color = {0, 0, 0, 0};
@@ -44,6 +43,10 @@ class Engine {
     virtual void render_process() = 0;
 
   public:
+    static const std::size_t FPS = 60;
+    static const std::size_t WIDTH = 640;
+    static const std::size_t HEIGHT = 360;
+
     // Initialize and start the game loop
     void start();
 

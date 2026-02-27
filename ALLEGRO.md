@@ -38,6 +38,35 @@ ALLEGRO_COLOR color = {0, 0, 0, 0}; // black non-transperent
 ALLEGRO_COLOR color = {255, 255, 255, 128}; // white half-transperent
 ```
 
+### Images
+```c++
+#include <allegro5/allegro_image.h>
+
+ALLEGRO_BITMAP *img = al_load_bitmap("image.png");
+al_draw_bitmap(img, 100, 100, 0); // 100x100 non-trasperent
+```
+
+### Text
+```c++
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
+
+ALLEGRO_FONT* font = al_load_ttf_font(
+    "font.ttf", // font file 
+    32,         // font size
+    0           // flags (just use zero)
+);
+
+al_draw_text(
+    font,                       // initialized font
+    al_map_rgb(255, 255, 255),  // color of the text
+    400, 50,                    // position on screen
+    ALLEGRO_ALIGN_CENTER,       // alignment
+    "Hello Allegro"             // text to draw
+);
+```
+
 ## INPUT
 
 ### Keyboard input

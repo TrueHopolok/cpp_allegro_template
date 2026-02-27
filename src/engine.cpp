@@ -1,57 +1,74 @@
 #include "engine.hpp"
-#include <cstddef>
 #include <iostream>
+#include <stdexcept>
 
 void Engine::start() {
     if (!stopped) {
-        throw "[FAIL]: trying to start the engine while it is already runnning";
+        throw std::logic_error(
+            "[FAIL]: trying to start the engine while it is already runnning");
     }
 
     std::cout << "[INFO]: Allegro is starting..." << std::endl;
 
-    if (!al_init()) {
-        throw "[FAIL]: allegro init";
-    } else if (verbose) {
-        std::cout << "[ OK ]: allegro init" << std::endl;
+    if (!Engine::initialized) {
+        Engine::initialized = true;
+
+        if (!al_init()) {
+            throw std::runtime_error("[FAIL]: allegro init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: allegro init" << std::endl;
+        }
+
+        if (!al_init_primitives_addon()) {
+            throw std::runtime_error("[FAIL]: primitives addon init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: primitives addons init" << std::endl;
+        }
+
+        if (!al_install_keyboard()) {
+            throw std::runtime_error("[FAIL]: keyboard init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: keyboard init" << std::endl;
+        }
+
+        if (!al_install_mouse()) {
+            throw std::runtime_error("[FAIL]: keyboard init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: keyboard init" << std::endl;
+        }
+
+        if (!al_init_image_addon()) {
+            throw std::runtime_error("[FAIL]: images addon init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: images addon init" << std::endl;
+        }
+
+        if (!al_init_font_addon() || !al_init_ttf_addon()) {
+            throw std::runtime_error("[FAIL]: text addon init");
+        } else if (verbose) {
+            std::cout << "[ OK ]: text addon init" << std::endl;
+        }
     }
 
-    timer = al_create_timer(1.0 / FPS);
+    timer = al_create_timer(1.0 / (double)Engine::FPS);
     if (!timer) {
-        throw "[FAIL]: timer init";
+        throw std::runtime_error("[FAIL]: timer init");
     } else if (verbose) {
         std::cout << "[ OK ]: timer init" << std::endl;
     }
 
-    display = al_create_display(WIDTH, HEIGHT);
+    display = al_create_display(Engine::WIDTH, Engine::HEIGHT);
     if (!display) {
-        throw "[FAIL]: display init";
+        throw std::runtime_error("[FAIL]: display init");
     } else if (verbose) {
         std::cout << "[ OK ]: display init" << std::endl;
     }
 
-    if (!al_init_primitives_addon()) {
-        throw "[FAIL]: primitives addons init";
-    } else if (verbose) {
-        std::cout << "[ OK ]: primitives addons init" << std::endl;
-    }
-
     event_queue = al_create_event_queue();
     if (!event_queue) {
-        throw "[FAIL]: event queue init";
+        throw std::runtime_error("[FAIL]: event queue init");
     } else if (verbose) {
         std::cout << "[ OK ]: event queue init" << std::endl;
-    }
-
-    if (!al_install_keyboard()) {
-        throw "[FAIL]: keyboard init";
-    } else if (verbose) {
-        std::cout << "[ OK ]: keyboard init" << std::endl;
-    }
-
-    if (!al_install_mouse()) {
-        throw "[FAIL]: keyboard init";
-    } else if (verbose) {
-        std::cout << "[ OK ]: keyboard init" << std::endl;
     }
 
     al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -72,31 +89,26 @@ void Engine::start() {
     }
 
     std::cout << "[INFO]: Allegro successefully started" << std::endl;
-    if (verbose) {
-        std::cout << "[ OK ]: game loop is about to begin" << std::endl;
-    }
 
     forever {
-        if (Engine::stopped) {
-            break;
+        if (stopped) {
+            if (verbose)
+                std::cout << "[ OK ]: engine was stopped manually" << std::endl;
+            return;
         }
 
         frame++;
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
-        if (verbose) {
-            std::cout << "[ OK ]: " << frame << " event" << std::endl;
-        }
-
         switch (ev.type) {
         case ALLEGRO_EVENT_TIMER:
             updated = true;
             physics_process();
-            if (verbose) {
-                std::cout << "[ OK ]: " << frame << " physics" << std::endl;
-            }
             break;
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            if (verbose)
+                std::cout << "[ OK ]: close event on frame " << frame
+                          << std::endl;
             stop();
             return;
         }
@@ -107,15 +119,12 @@ void Engine::start() {
                 al_clear_to_color(bg_color);
             render_process();
             al_flip_display();
-            if (verbose) {
-                std::cout << "[ OK ]: " << frame << " render" << std::endl;
-            }
         }
     }
 }
 
 void Engine::stop() {
-    std::cout << "[INFO]: Allegro stopping..." << std::endl;
+    std::cout << "[INFO]: Allegro is stopping..." << std::endl;
 
     if (timer) {
         al_destroy_timer(timer);
@@ -135,7 +144,7 @@ void Engine::stop() {
             std::cout << "[ OK ]: event queue destoryed" << std::endl;
     }
 
-    Engine::stopped = true;
+    stopped = true;
 
     std::cout << "[INFO]: Allegro was successefully stopped" << std::endl;
 }

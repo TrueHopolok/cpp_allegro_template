@@ -18,8 +18,19 @@
 
 Нам нужен файл `build.bat`. Все `.cpp` файлы, которые используются в проекте должны быть указаны на месте `src/*.cpp` файлов внутри батника. Также можно изменить название испольняемого файла `build/windows/my_name.exe`.
 ```bat
-g++ src/example_2.cpp src/AllegroUtil.cpp -o build/windows/program -Iallegro/include -Lallegro/lib -lallegro -lallegro_main -lallegro_primitives
+g++ src/example_engine_3.cpp src/engine.cpp ^
+-o build/windows/program ^
+-std=c++17 ^
+-Iallegro/include ^
+-Lallegro/lib ^
+-lallegro ^
+-lallegro_main ^
+-lallegro_primitives ^
+-lallegro_image ^
+-lallegro_font ^
+-lallegro_ttf
 ```
+Если не работает, попробуйте убрать `^` так, чтобы вся команда была в одну строку.
 
 Запускаем в `cmd` и готово. Важно, чтобы испольняемый файл был в той де директории что и `.dll` файлы.
 
@@ -27,7 +38,11 @@ g++ src/example_2.cpp src/AllegroUtil.cpp -o build/windows/program -Iallegro/inc
 
 Нам нужен файл `build.bat`. Все `.cpp` файлы, которые используются в проекте должны быть указаны на месте `src/*.cpp` файлов внутри скрипта. Также можно изменить название испольняемого файла `build/linux/my_name.exe`.
 ```sh
-g++ src/example_2.cpp src/AllegroUtil.cpp -o linux/program $(pkg-config --cflags --libs allegro-5 allegro_primitives-5)
+g++ src/example_engine_3.cpp src/engine.cpp \
+-o build/linux/program \
+-std=c++17 \
+$(pkg-config --cflags --libs allegro-5 allegro_primitives-5 allegro_image-5 allegro_font-5 allegro_ttf-5)
 ```
+Если не работает, попробуйте убрать `\` так, чтобы вся команда была в одну строку.
 
 Запускаем в `bash` и готово.
