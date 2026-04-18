@@ -85,6 +85,6 @@ al_key_down(&state, ALLEGRO_KEY_SPACE); // return bool
 
 ALLEGRO_MOUSE_STATE state;
 al_get_mouse_state(&state);
-al_mouse_button_down(&mstate, ALLEGRO_MOUSE_BUTTON_MIDDLE); // return bool
+al_mouse_button_down(&state, ALLEGRO_MOUSE_BUTTON_MIDDLE); // return bool
 state.x, state.y; // position of the mouse on the screen
 ```

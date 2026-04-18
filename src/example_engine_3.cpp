@@ -5,8 +5,10 @@
 #include "engine.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <cstddef>
+#include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 using namespace std;
@@ -17,17 +19,23 @@ struct Point {
 
 class IObject {
   public:
-    virtual void physics_process() = 0;
-    virtual void render_process() = 0;
+    virtual void process() = 0;
+    virtual void render() = 0;
     virtual ~IObject() = default;
 };
 
 class Shape : public IObject {
   protected:
-    Point pos;
+    Point origin;
+    Point get_pos() {
+        Point pos = origin;
+        pos.x += rand() % 31 - 10;
+        pos.y += rand() % 31 - 10;
+        return pos;
+    }
 
   public:
-    Shape(Point pos_) : pos(pos_) {};
+    Shape(Point pos_) : origin(pos_) {};
     virtual ~Shape() = default;
 };
 
@@ -37,8 +45,9 @@ class Square : public Shape {
 
   public:
     Square(Point pos_, float size_) : Shape(pos_), size(size_) {};
-    void physics_process() override {}
-    void render_process() override {
+    void process() override {}
+    void render() override {
+        Point pos = get_pos();
         al_draw_filled_rectangle(pos.x - size / 2, pos.y - size / 2,
                                  pos.x + size / 2, pos.y + size / 2,
                                  {255, 0, 0, 0});
@@ -51,8 +60,9 @@ class Circle : public Shape {
 
   public:
     Circle(Point pos_, float size_) : Shape(pos_), size(size_) {};
-    void physics_process() override {}
-    void render_process() override {
+    void process() override {}
+    void render() override {
+        Point pos = get_pos();
         al_draw_filled_circle(pos.x, pos.y, size, {0, 0, 255, 0});
     }
 };
@@ -63,16 +73,18 @@ class Screen : public Engine {
 
   public:
     void add_object(IObject *obj) { objects.push_back(obj); }
-    void physics_process() override {
+    void process(double _) override {
         for (size_t i = 0; i < objects.size(); i++) {
-            objects[i]->physics_process();
+            objects[i]->process();
         }
     }
-    void render_process() override {
+    void render() override {
         for (size_t i = 0; i < objects.size(); i++) {
-            objects[i]->render_process();
+            objects[i]->render();
         }
     }
+
+    Screen() : Engine(640, 360, 60, true) {}
 };
 
 int main() {
@@ -83,6 +95,8 @@ int main() {
     screen.add_object(new Circle({600, 320}, 30));
     try {
         screen.start();
+    } catch (runtime_error err) {
+        cout << err.what() << endl;
     } catch (exception err) {
         cout << err.what() << endl;
     }
