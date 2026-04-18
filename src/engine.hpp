@@ -65,12 +65,12 @@ class Engine {
     // Called each frame to redraw all things on screen
     virtual void render() = 0;
 
-  public:
     // Initialize Allegro if needed.
     // Then create engine instance.
     Engine(int display_width, int display_height, double frames_per_second,
            bool enable_verbose_mode);
 
+  public:
     // Starts the game loop
     void start();
 
