@@ -70,6 +70,9 @@ class Engine {
     Engine(int display_width, int display_height, double frames_per_second,
            bool enable_verbose_mode);
 
+    // Virtual, since it is a requirement for abstract classes
+    virtual ~Engine() = default;
+
   public:
     // Starts the game loop
     void start();
